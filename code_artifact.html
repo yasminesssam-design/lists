@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض تقديمي: شرح درس الدوال ومشروع حديقة الزهور</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+            height: calc(100vh - 120px);
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        .code-keyword { color: #f43f5e; font-weight: bold; }
+        .code-func { color: #38bdf8; font-weight: bold; }
+        .code-string { color: #a3e635; }
+        .code-comment { color: #94a3b8; font-style: italic; }
+        .code-num { color: #fbbf24; }
+    </style>
+</head>
+<body class="flex flex-col justify-between h-screen select-none">
+
+    <!-- Top Bar -->
+    <header class="flex justify-between items-center px-8 py-4 bg-slate-900 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+            <span class="bg-indigo-600 text-white p-2 rounded-xl text-lg font-bold">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </span>
+            <div>
+                <h1 class="font-bold text-lg text-indigo-300">مغامرات بايثون | الأسبوع السادس</h1>
+                <p class="text-xs text-slate-400">درس الدوال (Functions) ومشروع حديقة الزهور</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="slide-indicator" class="bg-slate-800 text-slate-300 px-4 py-1.5 rounded-full text-sm font-semibold border border-slate-700">
+                الشريحة 1 من 7
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Presentation Container -->
+    <main class="flex-1 flex items-center justify-center p-6 relative overflow-hidden">
+
+        <!-- SLIDE 1: Title Slide -->
+        <section class="slide active flex-col items-center justify-center text-center w-full max-w-5xl mx-auto space-y-6">
+            <div class="inline-block p-4 bg-indigo-500/10 border border-indigo-500/30 rounded-full text-indigo-400 text-4xl mb-2 animate-bounce">
+                🌸 🪄 🐢
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 leading-tight">
+                اختراع الأوامر السحرية!
+            </h1>
+            <p class="text-2xl text-slate-300 max-w-2xl font-semibold">
+                كيف نُعلّم بايثون مهارات جديدة باستخدام <span class="text-yellow-400 underline decoration-wavy">الدوال (Functions)</span>؟
+            </p>
+            <div class="pt-6 flex flex-wrap justify-center gap-4 text-sm font-medium text-slate-400">
+                <span class="bg-slate-800/80 border border-slate-700 px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-code text-indigo-400"></i> أمر <code class="text-pink-400 font-mono">def</code> الخارق
+                </span>
+                <span class="bg-slate-800/80 border border-slate-700 px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-paint-brush text-green-400"></i> مشروع حديقة الزهور
+                </span>
+                <span class="bg-slate-800/80 border border-slate-700 px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-yellow-400"></i> تحدي المبرمجين الصغار
+                </span>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: The Problem / Concept -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto space-y-6">
+            <div class="text-right">
+                <span class="text-indigo-400 font-bold text-sm tracking-widest uppercase">المشكلة والحل</span>
+                <h2 class="text-3xl font-bold text-white mt-1">لماذا نحتاج إلى الدوال (Functions)؟ 🤔</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Traditional Way -->
+                <div class="bg-rose-950/30 border border-rose-800/50 p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-3 text-rose-400 font-bold text-xl">
+                        <i class="fa-solid fa-circle-xmark text-2xl"></i>
+                        الطريقة التقليدية (المتعبة)
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        لو أردنا رسم 3 زهور، سنقوم بكتابة أسطر رسم الزهرة <span class="text-rose-300 font-bold underline">3 مرات كاملة</span>!
+                    </p>
+                    <div class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-400 space-y-1 border border-rose-900/40">
+                        <p class="text-rose-400"># كود الزهرة الأولى (8 أسطر)</p>
+                        <p>t.circle(30); t.left(45)...</p>
+                        <p class="text-rose-400"># كود الزهرة الثانية (8 أسطر جديدة!)</p>
+                        <p>t.circle(30); t.left(45)...</p>
+                        <p class="text-rose-400"># كود الزهرة الثالثة (إعادة نفس الكود!)</p>
+                        <p>t.circle(30); t.left(45)...</p>
+                    </div>
+                    <div class="text-xs text-rose-300 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-triangle-exclamation"></i> كود طويل، كثرة أخطاء، ومجهود كبير!
+                    </div>
+                </div>
+
+                <!-- Function Way -->
+                <div class="bg-emerald-950/30 border border-emerald-800/50 p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-3 text-emerald-400 font-bold text-xl">
+                        <i class="fa-solid fa-circle-check text-2xl"></i>
+                        طريقة المبرمج الذكي (الدوال)
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        نخترع أمرًا جديدًا نُسميه <span class="text-emerald-300 font-bold font-mono">draw_flower()</span> وننادي عليه بكلمة واحدة فقط!
+                    </p>
+                    <div class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 space-y-1 border border-emerald-900/40">
+                        <p class="text-emerald-400"># اخترعنا الأمر مرة واحدة بـ def</p>
+                        <p><span class="code-keyword">def</span> <span class="code-func">draw_flower</span>(): ...</p>
+                        <br>
+                        <p class="text-emerald-400"># نرسم الزهور في أي وقت بكلمة واحدة!</p>
+                        <p>draw_flower()</p>
+                        <p>draw_flower()</p>
+                        <p>draw_flower()</p>
+                    </div>
+                    <div class="text-xs text-emerald-300 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-bolt"></i> كود قصير، منظم، وسريع جدًا!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Anatomy of def -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto space-y-6">
+            <div class="text-right">
+                <span class="text-indigo-400 font-bold text-sm tracking-widest uppercase">القواعد الذهبية</span>
+                <h2 class="text-3xl font-bold text-white mt-1">كيف نكتب دالة بسيطة؟ ⚙️</h2>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-700 p-8 rounded-3xl space-y-6">
+                <!-- Anatomy Illustration -->
+                <div class="bg-slate-950 p-6 rounded-2xl text-2xl md:text-3xl font-mono text-center flex flex-wrap justify-center items-center gap-3 border border-indigo-500/30 dir-ltr">
+                    <span class="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-3 py-1 rounded-xl" title="كلمة محجوزة لبدء الدالة">def</span>
+                    <span class="bg-sky-500/20 text-sky-400 border border-sky-500/40 px-3 py-1 rounded-xl" title="اسم اختياري معبر">draw_flower</span>
+                    <span class="text-slate-400">(</span>
+                    <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1 rounded-xl text-lg" title="مدخلات الدالة (اختياري)">color_name</span>
+                    <span class="text-slate-400">):</span>
+                </div>
+
+                <!-- Explanation Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-right">
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+                        <div class="text-rose-400 font-bold mb-1 flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> 1. الكلمة السحرية <code class="font-mono">def</code>
+                        </div>
+                        <p class="text-xs text-slate-300">اختصار لـ Definition، تخبر بايثون: "انتبه! سأعلمك أمرًا جديدًا الآن".</p>
+                    </div>
+
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+                        <div class="text-sky-400 font-bold mb-1 flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-sky-500 inline-block"></span> 2. اسم الدالة والأقواس
+                        </div>
+                        <p class="text-xs text-slate-300">تختار اسمًا يعبر عن الوظيفة، متبوعًا بأقواس <code class="font-mono">()</code> ونقطتين <code class="font-mono">:</code></p>
+                    </div>
+
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+                        <div class="text-amber-300 font-bold mb-1 flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> 3. المسافة البدائية (Indent)
+                        </div>
+                        <p class="text-xs text-slate-300">كل الأوامر التابعة للدالة يجب أن تزحف للداخل بمسافة (Tab) حتى يفهمها بايثون!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Full Code Display -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto space-y-4">
+            <div class="flex justify-between items-end">
+                <div class="text-right">
+                    <span class="text-indigo-400 font-bold text-sm tracking-widest uppercase">مشروع الأسبوع</span>
+                    <h2 class="text-2xl font-bold text-white mt-1">كود مشروع "حديقة الزهور الملونة" 🌸</h2>
+                </div>
+                <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-lg border border-slate-700">18 سطر كود فقط!</span>
+            </div>
+
+            <!-- Code Window -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl dir-ltr text-left">
+                <div class="bg-slate-900 px-4 py-2 border-b border-slate-800 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                    <span class="text-xs text-slate-400 font-mono ml-2">flower_garden.py</span>
+                </div>
+                <pre class="p-4 text-xs md:text-sm font-mono overflow-x-auto leading-relaxed text-slate-200">
+<span class="code-keyword">import</span> turtle
+
+t = turtle.Turtle()
+t.speed(<span class="code-num">0</span>)
+turtle.bgcolor(<span class="code-string">"lightgreen"</span>)  <span class="code-comment"># خلفية الحديقة</span>
+
+<span class="code-comment"># 1. تعريف دالة رسم الزهرة</span>
+<span class="code-keyword">def</span> <span class="code-func">draw_flower</span>(color_name):
+    t.color(color_name)
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(<span class="code-num">8</span>):       <span class="code-comment"># رسم 8 بتلات</span>
+        t.circle(<span class="code-num">30</span>)
+        t.left(<span class="code-num">45</span>)
+
+<span class="code-comment"># 2. استدعاء الدالة لرسم 3 زهور بأماكن وألوان مختلفة</span>
+draw_flower(<span class="code-string">"red"</span>)          <span class="code-comment"># زهرة حمراء</span>
+
+t.penup()
+t.goto(-<span class="code-num">150</span>, <span class="code-num">100</span>)
+t.pendown()
+draw_flower(<span class="code-string">"purple"</span>)       <span class="code-comment"># زهرة بنفسجية</span>
+
+t.penup()
+t.goto(<span class="code-num">150</span>, -<span class="code-num">50</span>)
+t.pendown()
+draw_flower(<span class="code-string">"orange"</span>)       <span class="code-comment"># زهرة برتقالية</span>
+
+turtle.done()</pre>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Step-by-Step Code Breakdown -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto space-y-6">
+            <div class="text-right">
+                <span class="text-indigo-400 font-bold text-sm tracking-widest uppercase">التشريح التفصيلي</span>
+                <h2 class="text-3xl font-bold text-white mt-1">كيف يفكر الكمبيوتر أثناء تشغيل الكود؟ 🧠</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-right">
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex items-start gap-4">
+                    <div class="bg-indigo-600/20 text-indigo-400 p-3 rounded-xl font-bold text-xl">1</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-indigo-300">تجهيز الشاشة</h3>
+                        <p class="text-xs text-slate-300 mt-1">نغير لون الخلفية للون الأخضر الفاتح <code class="text-green-400">lightgreen</code> ليصبح شكل اللوحة كحديقة مع جعل السرعة أسرع ما يمكن <code class="text-yellow-400">speed(0)</code>.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex items-start gap-4">
+                    <div class="bg-purple-600/20 text-purple-400 p-3 rounded-xl font-bold text-xl">2</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-purple-300">بناء آلة رسم الزهور</h3>
+                        <p class="text-xs text-slate-300 mt-1">الدالة <code class="text-sky-300 font-mono">draw_flower(color_name)</code> تأخذ اللون المطلوب وترسم 8 دوائر متداخلة لتكون البتلات.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex items-start gap-4">
+                    <div class="bg-pink-600/20 text-pink-400 p-3 rounded-xl font-bold text-xl">3</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-pink-300">التحرك بدون خربشة!</h3>
+                        <p class="text-xs text-slate-300 mt-1">نستخدم <code class="text-pink-400 font-mono">t.penup()</code> لرفع القلم قبل الانتقال للذهاب لمكان جديد <code class="text-pink-400 font-mono">goto(x, y)</code> دون رسم خطوط عشوائية.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex items-start gap-4">
+                    <div class="bg-amber-600/20 text-amber-400 p-3 rounded-xl font-bold text-xl">4</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-amber-300">إعادة استخدام الدالة</h3>
+                        <p class="text-xs text-slate-300 mt-1">ببساطة شديدة نغير اسم اللون فقط مثل <code class="text-amber-300">"purple"</code> لتقوم الدالة بتلوين الزهرة فورًا!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Student Challenges -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto space-y-6">
+            <div class="text-center space-y-2">
+                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-4 py-1 rounded-full text-xs font-bold uppercase">حان وقت الإبداع</span>
+                <h2 class="text-3xl font-black text-white">🏆 تحدي المبرمجين الصغار!</h2>
+                <p class="text-slate-300 text-sm">اختر أحد التحديات التالية وطبقه فورًا على جهازك:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Challenge 1 -->
+                <div class="bg-slate-900/80 border border-slate-700 p-6 rounded-2xl hover:border-indigo-500 transition-all text-right space-y-3">
+                    <div class="text-3xl">🔵</div>
+                    <h3 class="font-bold text-lg text-indigo-300">التحدي الأول: زهرة أزرق زاهي</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        أضف زهرة رابعة لونهـا أزرق <code class="text-sky-400">"blue"</code> في الزاوية العلوية اليسرى من الشاشة.
+                    </p>
+                    <div class="text-xs font-semibold text-indigo-400 pt-2 border-t border-slate-800">
+                        مساعدة: احتاج استخدام penup و goto ثم draw_flower.
+                    </div>
+                </div>
+
+                <!-- Challenge 2 -->
+                <div class="bg-slate-900/80 border border-slate-700 p-6 rounded-2xl hover:border-purple-500 transition-all text-right space-y-3">
+                    <div class="text-3xl">⭐</div>
+                    <h3 class="font-bold text-lg text-purple-300">التحدي الثاني: زهرة بـ 12 بتلة</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        عدّل التكرار داخل الدالة لتجعل الزهرة تتكون من 12 بتلة بدلاً من 8 (تذكر تغيير زاوية الدوران!).
+                    </p>
+                    <div class="text-xs font-semibold text-purple-400 pt-2 border-t border-slate-800">
+                        مساعدة: $360 \div 12 = 30$ درجة!
+                    </div>
+                </div>
+
+                <!-- Challenge 3 -->
+                <div class="bg-slate-900/80 border border-slate-700 p-6 rounded-2xl hover:border-amber-500 transition-all text-right space-y-3">
+                    <div class="text-3xl">🚀</div>
+                    <h3 class="font-bold text-lg text-amber-300">تحدي العباقرة: التحكم بالحجم</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        اجعل الدالة تقبل مدخلين <code class="text-amber-300 font-mono">draw_flower(color_name, size)</code> لرسم زهور كبيرة وصغيرة!
+                    </p>
+                    <div class="text-xs font-semibold text-amber-400 pt-2 border-t border-slate-800">
+                        مساعدة: ضع size داخل t.circle(size).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Summary & Conclusion -->
+        <section class="slide flex-col items-center justify-center text-center w-full max-w-4xl mx-auto space-y-6">
+            <div class="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-3xl flex items-center justify-center text-emerald-400 text-4xl mb-2">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h2 class="text-4xl font-black text-white">ماذا تعلمنا اليوم؟ 🌟</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-right w-full mt-4">
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-check-circle text-emerald-400 text-xl"></i>
+                    <span class="text-xs text-slate-200">الدوال تختصر الكود وتمنع التكرار المجهد.</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-check-circle text-emerald-400 text-xl"></i>
+                    <span class="text-xs text-slate-200">ننشئ الدالة بـ <code class="text-pink-400">def</code> ونناديها باسمها.</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-check-circle text-emerald-400 text-xl"></i>
+                    <span class="text-xs text-slate-200">يمكننا إرسال مدخلات (مثل الألوان) للدالة.</span>
+                </div>
+            </div>
+
+            <p class="text-xl font-bold text-indigo-300 pt-4">
+                ممتازين يا أبطال بايثون! نلتقي الأسبوع القادم مع "السلحفاة الذكية والشروط"! 🚀
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <footer class="flex justify-between items-center px-8 py-4 bg-slate-900 border-t border-slate-800">
+        <button id="prev-btn" onclick="changeSlide(-1)" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2.5 rounded-xl font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-arrow-right"></i> السابق
+        </button>
+
+        <!-- Progress Bar -->
+        <div class="w-1/3 bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-pink-500 h-full w-1/7 transition-all duration-300"></div>
+        </div>
+
+        <button id="next-btn" onclick="changeSlide(1)" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-indigo-600/20">
+            التالي <i class="fa-solid fa-arrow-left"></i>
+        </button>
+    </footer>
+
+    <!-- Interactive Navigation Logic -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const slideIndicator = document.getElementById('slide-indicator');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            slideIndicator.textContent = `الشريحة ${currentSlide + 1} من ${totalSlides}`;
+            progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+            prevBtn.disabled = currentSlide === 0;
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.innerHTML = 'إنهاء الدرس <i class="fa-solid fa-check"></i>';
+                nextBtn.classList.replace('bg-indigo-600', 'bg-emerald-600');
+            } else {
+                nextBtn.innerHTML = 'التالي <i class="fa-solid fa-arrow-left"></i>';
+                nextBtn.classList.replace('bg-emerald-600', 'bg-indigo-600');
+            }
+        }
+
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                currentSlide++;
+            } else if (direction === -1 && currentSlide > 0) {
+                currentSlide--;
+            }
+            updateSlide();
+        }
+
+        // Keyboard Arrow Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(1);  // RTL layout
+            if (e.key === 'ArrowRight') changeSlide(-1);
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
